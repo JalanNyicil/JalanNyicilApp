@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,29 +12,35 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
   <title>Jalan Nyicil</title>
   <style>
-    header{
+    header {
       background: url(img/home.jpg);
       background-size: cover;
       background-position: center;
       min-height: 1000px;
     }
-    @media screen and (max-width: 670px){
-      header{
+
+    @media screen and (max-width: 670px) {
+      header {
         min-height: 500px;
       }
     }
-    .section{
+
+    .section {
       padding-top: 4vw;
       padding-bottom: 4vw;
     }
-    .tabs .indicator{
+
+    .tabs .indicator {
       background-color: #1a237e;
     }
-    .tabs .tab a:focus, .tabs .tab a:focus.active{
+
+    .tabs .tab a:focus,
+    .tabs .tab a:focus.active {
       background: transparent;
     }
   </style>
 </head>
+
 <body>
 
   <!-- navbar -->
@@ -49,94 +56,102 @@
           <li><a href="#services">Services</a></li>
           <li><a href="#contact">Find your next experiences</a></li>
           <script>
-          function statusChangeCallback(response) {
-            console.log('statusChangeCallback');
-            console.log(response);
-            // The response object is returned with a status field that lets the
-            // app know the current login status of the person.
-            // Full docs on the response object can be found in the documentation
-            // for FB.getLoginStatus().
-            if (response.status === 'connected') {
-              // Logged into your app and Facebook.
-              localStorage.setItem('tokenfb', response.authResponse.accessToken);
-              testAPI(response.authResponse.accessToken);
-            } else {
-              // The person is not logged into your app or we are unable to tell.
-              document.getElementById('status').innerHTML = 'Please log ' +
-                'into this app.';
+            function statusChangeCallback(response) {
+              console.log('statusChangeCallback');
+              console.log(response);
+              // The response object is returned with a status field that lets the
+              // app know the current login status of the person.
+              // Full docs on the response object can be found in the documentation
+              // for FB.getLoginStatus().
+              if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                localStorage.setItem('tokenfb', response.authResponse.accessToken);
+                testAPI(response.authResponse.accessToken);
+              } else {
+                // The person is not logged into your app or we are unable to tell.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                  'into this app.';
+              }
             }
-          }
-          // This function is called when someone finishes with the Login
-          // Button.  See the onlogin handler attached to it in the sample
-          // code below.
-          function checkLoginState() {
-            FB.getLoginStatus(function (response) {
-              statusChangeCallback(response);
-            });
-          }
-          window.fbAsyncInit = function () {
-            FB.init({
-              appId: '1005221486322784',
-              cookie: true,  // enable cookies to allow the server to access
-              // the session
-              xfbml: true,  // parse social plugins on this page
-              version: 'v2.8' // use graph api version 2.8
-            });
-            // Now that we've initialized the JavaScript SDK, we call
-            // FB.getLoginStatus().  This function gets the state of the
-            // person visiting this page and can return one of three states to
-            // the callback you provide.  They can be:
-            //
-            // 1. Logged into your app ('connected')
-            // 2. Logged into Facebook, but not your app ('not_authorized')
-            // 3. Not logged into Facebook and can't tell if they are logged into
-            //    your app or not.
-            //
-            // These three cases are handled in the callback function.
-            FB.getLoginStatus(function (response) {
-              statusChangeCallback(response);
-            });
-          };
-          // Load the SDK asynchronously
-          (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
-          // Here we run a very simple test of the Graph API after login is
-          // successful.  See statusChangeCallback() for when this call is made.
-          function testAPI(token) {
-            console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me?fields=id,name,email', function (response) {
-              sendProfile(response);
-              document.getElementById('status').innerHTML =
-                'Thanks for logging in, ' + response.name + '!';
-              getHomeTwott();
-            });
-            function sendProfile(user) {
-              console.log(user)
-              axios.post('http://localhost:3000/user/login', {}, { headers: { 'fbId': user.id, 'name': user.name, 'email': user.email } })
-                .then(function (response) {
-                  localStorage.setItem('tokenapp', response.data.token);
-                  console.log(localStorage);
-                })
-                .catch(function (err) {
-                  console.log(err)
-                })
+            // This function is called when someone finishes with the Login
+            // Button.  See the onlogin handler attached to it in the sample
+            // code below.
+            function checkLoginState() {
+              FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+              });
             }
-          }
-        </script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId: '1005221486322784',
+                cookie: true, // enable cookies to allow the server to access
+                // the session
+                xfbml: true, // parse social plugins on this page
+                version: 'v2.8' // use graph api version 2.8
+              });
+              // Now that we've initialized the JavaScript SDK, we call
+              // FB.getLoginStatus().  This function gets the state of the
+              // person visiting this page and can return one of three states to
+              // the callback you provide.  They can be:
+              //
+              // 1. Logged into your app ('connected')
+              // 2. Logged into Facebook, but not your app ('not_authorized')
+              // 3. Not logged into Facebook and can't tell if they are logged into
+              //    your app or not.
+              //
+              // These three cases are handled in the callback function.
+              FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+              });
+            };
+            // Load the SDK asynchronously
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://connect.facebook.net/en_US/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            // Here we run a very simple test of the Graph API after login is
+            // successful.  See statusChangeCallback() for when this call is made.
+            function testAPI(token) {
+              console.log('Welcome!  Fetching your information.... ');
+              FB.api('/me?fields=id,name,email', function(response) {
+                sendProfile(response);
+                document.getElementById('status').innerHTML =
+                  'Thanks for logging in, ' + response.name + '!';
+                getHomeTwott();
+              });
 
-        <!--
+              function sendProfile(user) {
+                console.log(user)
+                axios.post('http://localhost:3000/user/login', {}, {
+                    headers: {
+                      'fbId': user.id,
+                      'name': user.name,
+                      'email': user.email
+                    }
+                  })
+                  .then(function(response) {
+                    localStorage.setItem('tokenapp', response.data.token);
+                    console.log(localStorage);
+                  })
+                  .catch(function(err) {
+                    console.log(err)
+                  })
+              }
+            }
+          </script>
+
+          <!--
         Below we include the Login Button social plugin. This button uses
         the JavaScript SDK to present a graphical Login button that triggers
         the FB.login() function when clicked.
       -->
 
-        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-        </fb:login-button>
+          <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+          </fb:login-button>
         </ul>
         <ul class="sidenav grey lighten-2" id="mobile-menu">
           <li><a href="#">Photo's</a></li>
@@ -151,31 +166,31 @@
   <section class="container section scrollspy" id="photos">
     <div class="row">
       <div class="col s12 l4">
-          <img src="img/quotes.jpg" alt="" class="responsive-img materialboxed">
+        <img src="img/quotes.jpg" alt="" class="responsive-img materialboxed">
       </div>
       <div class="col s12 l6 offset-l1">
         <h2 class="indigo-text text-darken-4">For a change</h2>
         <p>Travel for a change.</p>
-<p>We believe in the power of travel; a power that broadens your perspective and turns strangers into family. It’s this belief that motivates us at
-Jalan Nyicil to provide life-changing adventures for anyone with a case of wanderlust.</p>
+        <p>We believe in the power of travel; a power that broadens your perspective and turns strangers into family. It’s this belief that motivates us at Jalan Nyicil to provide life-changing adventures for anyone with a case of wanderlust.</p>
       </div>
     </div>
     <div class="row">
       <div class="col s12 l4 offset-l1 push-l7">
-          <img src="img/party.jpg" alt="" class="responsive-img materialboxed">
+        <img src="img/party.jpg" alt="" class="responsive-img materialboxed">
       </div>
       <div class="col s12 l6 offset-l1 pull-l5 right-align">
         <h2 class="indigo-text text-darken-4">Cityscapes</h2>
-        <p>When you take a flower in your hand and really look at it, it's your world for the moment. We want to give that world to someone else. Most people in the city rush around so, they have no time to look at a flower. We want them to see it whether they want to or not.</p>
+        <p>When you take a flower in your hand and really look at it, it's your world for the moment. We want to give that world to someone else. Most people in the city rush around so, they have no time to look at a flower. We want them to see it whether
+          they want to or not.</p>
       </div>
     </div>
     <div class="row">
       <div class="col s12 l4">
-          <img src="img/events.jpg" alt="" class="responsive-img materialboxed">
+        <img src="img/events.jpg" alt="" class="responsive-img materialboxed">
       </div>
       <div class="col s12 l6 offset-l1">
         <h2 class="indigo-text text-darken-4">Events</h2>
-        <p>Live to work. Work to party. Party to live.  .</p>
+        <p>Live to work. Work to party. Party to live. .</p>
       </div>
     </div>
   </section>
@@ -194,8 +209,7 @@ Jalan Nyicil to provide life-changing adventures for anyone with a case of wande
         <h3 class="indigo-text text-darken-4">What we do..</h3>
         <p>Jalan Nyicil is the world's largest event technology platform. We build the technology to </p>
         <p>allow anyone to find and attend new things to do that fuel their passions and enrich their lives.</p>
-        <p>Music festivals, venues, marathons, conferences, hackathons, air guitar contests, political rallies, fundraisers, gaming competitions — you name it,
-          we power it. Our mission? To bring the world together through live experiences.</p>
+        <p>Music festivals, venues, marathons, conferences, hackathons, air guitar contests, political rallies, fundraisers, gaming competitions — you name it, we power it. Our mission? To bring the world together through live experiences.</p>
       </div>
       <div class="col s12 l6 offset-l2">
         <!-- tabs -->
@@ -208,17 +222,17 @@ Jalan Nyicil to provide life-changing adventures for anyone with a case of wande
           </li>
         </ul>
         <div id="photography" class="col s12">
-            <p class="flow-text indigo-text text-darken-4">Jalan</p>
-            <p>"Jalan" means to walk (in Bahasa). walking around is a very nice thing</p>
-            <p>We look forward to fulfilling your desire to keep walking with our technology.</p>
+          <p class="flow-text indigo-text text-darken-4">Jalan</p>
+          <p>"Jalan" means to walk (in Bahasa). walking around is a very nice thing</p>
+          <p>We look forward to fulfilling your desire to keep walking with our technology.</p>
         </div>
         <div id="editing" class="col s12">
-            <p class="flow-text indigo-text text-darken-4">Nyicil</p>
-            <p>"Nyicil" , means installment (in Bahasa). We are a solution where you can still walk around with fantastic things around you with installment payments method.</p>
-            <p>We understand that walking on this day is very difficult to find a place that fulfills your dreams, your time and the nearest place from where you are.</p>
-        </div>
+          <p class="flow-text indigo-text text-darken-4">Nyicil</p>
+          <p>"Nyicil" , means installment (in Bahasa). We are a solution where you can still walk around with fantastic things around you with installment payments method.</p>
+          <p>We understand that walking on this day is very difficult to find a place that fulfills your dreams, your time and the nearest place from where you are.</p>
         </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -234,18 +248,19 @@ Jalan Nyicil to provide life-changing adventures for anyone with a case of wande
     <div class="row">
       <div class="col s12 l5">
         <h3 class="indigo-text text-darken-4">Check the closest events to your current position</h3>
-        <p><h4> No more question likes...</h4></p>
+        <p>
+          <h4> No more question likes...</h4></p>
         <p>I'm trying to find things to do in my surrounding area. But the events suggested only shows events in my current location. How do I search for events in other cities?</p>
         <p>What should we do for this weekend?</p>
         <p>Whats new?</p>
       </div>
       <div class="col s12 l5 offset-l2">
         <form>
-                <div class="input-field">
-                  <i class="material-icons prefix">people</i>
-                  <input type="text" id="Name" class="Name">
-                  <label for="Name">Your Name</label>
-                </div>
+          <div class="input-field">
+            <i class="material-icons prefix">people</i>
+            <input type="text" id="Name" class="Name">
+            <label for="Name">Your Name</label>
+          </div>
           <div class="input-field">
             <i class="material-icons prefix">email</i>
             <input type="email" id="email">
@@ -293,9 +308,115 @@ Jalan Nyicil to provide life-changing adventures for anyone with a case of wande
           <p>We are just a group of young people who are stuck on weekly presentation</p>
         </div>
         <div class="col l4 offset-l2 s12">
-          <h5 class="white-text">Connect</h5>
+          <h5 class="white-text">Facebook Logout</h5>
           <ul>
-            <li><a class="grey-text text-lighten-3" href="#">Facebook</a></li>
+            <script>
+              function statusChangeCallback(response) {
+                console.log('statusChangeCallback');
+                console.log(response);
+                // The response object is returned with a status field that lets the
+                // app know the current login status of the person.
+                // Full docs on the response object can be found in the documentation
+                // for FB.getLoginStatus().
+                if (response.status === 'connected') {
+                  // Logged into your app and Facebook.
+                  localStorage.setItem('tokenfb', response.authResponse.accessToken);
+                  testAPI(response.authResponse.accessToken);
+                } else {
+                  // The person is not logged into your app or we are unable to tell.
+
+                  document.getElementById('status').innerHTML = 'Please log ' +
+                    'into this app.';
+                }
+              }
+              // This function is called when someone finishes with the Login
+              // Button.  See the onlogin handler attached to it in the sample
+              // code below.
+              function checkLoginState() {
+                FB.getLoginStatus(function(response) {
+                  statusChangeCallback(response);
+                });
+              }
+
+              function logOut() {
+                FB.logout(function(response) {
+                  statusChangeCallback(response);
+                  console.log("already logout")
+                  // user is now logged out
+                });
+              }
+
+              window.fbAsyncInit = function() {
+                FB.init({
+                  appId: '1005221486322784',
+                  cookie: true, // enable cookies to allow the server to access
+                  // the session
+                  xfbml: true, // parse social plugins on this page
+                  version: 'v2.8' // use graph api version 2.8
+                });
+                // Now that we've initialized the JavaScript SDK, we call
+                // FB.getLoginStatus().  This function gets the state of the
+                // person visiting this page and can return one of three states to
+                // the callback you provide.  They can be:
+                //
+                // 1. Logged into your app ('connected')
+                // 2. Logged into Facebook, but not your app ('not_authorized')
+                // 3. Not logged into Facebook and can't tell if they are logged into
+                //    your app or not.
+                //
+                // These three cases are handled in the callback function.
+                FB.getLoginStatus(function(response) {
+                  statusChangeCallback(response);
+                });
+              };
+              // Load the SDK asynchronously
+              (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+              // Here we run a very simple test of the Graph API after login is
+              // successful.  See statusChangeCallback() for when this call is made.
+              function testAPI(token) {
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me?fields=id,name,email', function(response) {
+                  sendProfile(response);
+                  document.getElementById('status').innerHTML =
+                    'Thanks for logging in, ' + response.name + '!';
+                  getHomeTwott();
+                });
+
+                function sendProfile(user) {
+                  console.log(user)
+                  axios.post('http://localhost:3000/user/login', {}, {
+                      headers: {
+                        'fbId': user.id,
+                        'name': user.name,
+                        'email': user.email
+                      }
+                    })
+                    .then(function(response) {
+                      localStorage.setItem('tokenapp', response.data.token);
+                      console.log(localStorage);
+                    })
+                    .catch(function(err) {
+                      console.log(err)
+                    })
+                }
+              }
+            </script>
+
+            <!--
+          Below we include the Login Button social plugin. This button uses
+          the JavaScript SDK to present a graphical Login button that triggers
+          the FB.login() function when clicked.
+        -->
+        <div class="input-field center">
+          <button class="btn" type="submit" onclick="logOut()">Logout</button>
+        </div>
           </ul>
         </div>
       </div>
@@ -309,7 +430,7 @@ Jalan Nyicil to provide life-changing adventures for anyone with a case of wande
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('.sidenav').sidenav();
       $('.materialboxed').materialbox();
       $('.parallax').parallax();
@@ -323,4 +444,5 @@ Jalan Nyicil to provide life-changing adventures for anyone with a case of wande
     });
   </script>
 </body>
+
 </html>
