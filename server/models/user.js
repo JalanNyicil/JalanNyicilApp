@@ -5,8 +5,8 @@ const userSchema = new Schema ({
   name:String,
   email:String,
   fbid:Number,
-  coordinate:String,
-  planTrips:[{ type: Schema.Types.ObjectId, ref: 'PlannedTrip' }]
+  geoHash:String,
+  plannedTrips:[{ type: Schema.Types.ObjectId, ref: 'PlannedTrip' }]
 })
 
 const User = mongoose.model('User', userSchema);
