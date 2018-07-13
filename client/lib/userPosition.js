@@ -9,7 +9,10 @@ function getLocation() {
 
 function showPosition(position) {
   var x = document.getElementById("location");
-  x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+  x.innerHTML = "Position Obtained";
+  document.getElementById('latitude').innerHTML = position.coords.latitude;
+  document.getElementById('longitude').innerHTML = position.coords.longitude;
+
 
   var latlon = position.coords.latitude + "," + position.coords.longitude;
 
@@ -77,11 +80,15 @@ function initMap(position) {
   marker.addListener('click', toggleBounce);
 
   google.maps.event.addListener(marker, 'dragend', function(evt) {
-    document.getElementById('location').innerHTML = 'Latitude: ' + evt.latLng.lat().toFixed(3) + '<br>Longitude: ' + evt.latLng.lng().toFixed(3);
+    document.getElementById('location').innerHTML = 'Position Obtained';
+    document.getElementById('latitude').innerHTML = evt.latLng.lat().toFixed(3);
+    document.getElementById('longitude').innerHTML = evt.latLng.lng().toFixed(3);
   });
 
   google.maps.event.addListener(marker, 'dragstart', function(evt) {
-    document.getElementById('location').innerHTML = 'Latitude: ' + evt.latLng.lat().toFixed(3) + '<br>Longitude: ' + evt.latLng.lng().toFixed(3);
+    document.getElementById('location').innerHTML = 'Tracking';
+    document.getElementById('latitude').innerHTML = "...";
+    document.getElementById('longitude').innerHTML = "...";
   });
 
   marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
@@ -96,7 +103,16 @@ function toggleBounce() {
     marker.setAnimation(null);
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(sendPosition, 3000)
   }
+}
+
+function sendPosition() {
+
+  let lat = $("#latitude").html();
+  let long = $("#longitude").html();
+  console.log("lat--->", lat);
+  console.log("long--->", long);
 }
 // function addMarker(map, event) {
 //   var marker = new google.maps.Marker({

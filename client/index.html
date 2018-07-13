@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css">
     <style media="screen">
     #map {
@@ -8,10 +11,13 @@
       height: 400px;
     }
     </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   </head>
   <body>
     <p id="location">location there</p>
+    <p id="latitude"></p>
+    <p id="longitude"></p>
     <div id="map"></div>
     <div id="events"></div>
     <script src="./lib/userPosition.js"></script>
